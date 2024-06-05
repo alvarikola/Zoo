@@ -1,19 +1,19 @@
 class Habitat:
     
-    def __init__(self, id:int, nombre:str) -> None:
+    def __init__(self, id:int, descripcion:str) -> None:
         self.id = id
-        self.nombre = nombre
+        self.descripcion = descripcion
 
 
     def leer(self):
-        return self.id + ", " + self.nombre
+        return self.id + ", " + self.descripcion
     
 
-    def actualizar(self, idNuevo:int, nombreNuevo:str):
+    def actualizar(self, idNuevo:int, descripcionNuevo:str):
         self.id = idNuevo
-        self.nombre = nombreNuevo
+        self.descripcion = descripcionNuevo
 
 
     def delete(self):
         self.id = None
-        self.nombre = None
+        self.descripcion = None
