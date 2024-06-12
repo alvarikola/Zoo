@@ -28,7 +28,7 @@ SQLDDLDELETE = '''DELETE FROM habitat WHERE id = '''
 SQLDDLSELECT1 = '''SELECT id FROM habitat WHERE descripcion LIKE '''
 
 
-class ColeccionTrabajador:
+class ColeccionHabitat:
     DBNOMBRE = "animal.db"
 
     def __init__(self):
