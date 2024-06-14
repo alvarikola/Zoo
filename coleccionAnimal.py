@@ -37,7 +37,7 @@ class ColeccionAnimal:
         self.con.execute(SQLMDLCREATE)
 
 
-    def leer(self) -> str:
+    def leer(self) -> None:
         return self.con.execute(SQLDDLSELECT).fetchall()
     
 
