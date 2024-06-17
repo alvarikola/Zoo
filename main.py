@@ -5,11 +5,11 @@ from trabajador import Trabajador
 from coleccionHabitat import ColeccionHabitat
 from habitat import Habitat
 
-cc = ColeccionAnimal().leer()
-
+ct = ColeccionTrabajador()
+cc = ColeccionAnimal()
 # print(cc.buscar(Animal('Gato')))
-# print(cc.insertar(Animal('Gato')))
-# cc.borrar(Animal('Perro'))
+# print(ct.insertar(Trabajador('Jose Luis')))
+# ct.borrar(Trabajador('<trabajador.Trabajador object at 0x0000027B6F21ADE0>'))
 # cc.actualizar("Quedan 2 semanas de clase", "Hola qué tal!")
-cc = [("uno","dos")] + cc
-print(cc)
+# ca = [("uno","dos")] + ca
+print(ct.leer())

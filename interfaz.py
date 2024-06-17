@@ -78,8 +78,9 @@ class AnimalScreen(Screen):
             self.app.switch_to_main()
         elif event.button.id == "insertar":
             self.app.mytable = "animal"
-            self.app.switch_to_Animal()
-            self.app.pop_screen("animalScreen")
+            self.app.switch_to_Insertar()
+            # self.app.pop_screen()
+            
 
     def _on_mount(self) -> None:
         table = self.query_one(DataTable)
@@ -96,11 +97,16 @@ class TrabajadorScreen(Screen):
     def compose(self) -> ComposeResult:
         yield Header("Trabajadores del zoo") 
         yield DataTable()
-        yield Button("Volver")
+        yield Button("Insertar", id="insertar")
+        yield Button("Volver", id="volver")
         yield Footer()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
-        self.app.switch_to_main()
+        if event.button.id == "volver":
+            self.app.switch_to_main()
+        elif event.button.id == "insertar":
+            self.app.mytable = "trabajador"
+            self.app.switch_to_InsertarTrabajador()
 
     def _on_mount(self) -> None:
         table = self.query_one(DataTable)
@@ -145,16 +151,41 @@ class InsertarScreen(Screen):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "volver":
-            self.app.push_screen("animalScreen")
+            # self.app.push_screen("animal")
+            self.app.pop_screen()
         elif event.button.id == "aceptar" and self.app.mytable == "animal":
-            self.app.cc.insertar(Animal(self.query_one(Input).value))
+            self.app.ca.insertar(Animal(self.query_one(Input).value))
+        elif event.button.id == "aceptar" and self.app.mytable == "trabajador":
+            self.app.ct.insertar(Trabajador(self.query_one(Input).value))
 
             
             
 
     def _on_mount(self) -> None:
-        self.title = "Trabajadores del zoo"
+        self.title = "Insertar datos"
       
+
+class InsertarTrabajadorScreen(Screen):
+    def compose(self) -> ComposeResult:
+        yield Header("Insertar trabajador") 
+        yield Input(placeholder="Nombre del trabajador")
+        yield Button("Volver", id="volver")
+        yield Button("Aceptar", id="aceptar")
+        yield Footer()
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "volver":
+            # self.app.push_screen("animal")
+            self.app.pop_screen()
+        elif event.button.id == "aceptar" and self.app.mytable == "trabajador":
+            self.app.ct.insertar(Trabajador(self.query_one(Input).value))
+        
+
+            
+            
+
+    def _on_mount(self) -> None:
+        self.title = "Insertar datos"
     
 
 
@@ -172,16 +203,22 @@ class ModesApp(App):
         "trabajador": TrabajadorScreen,
         "habitat": HabitatScreen,
         "insertar": InsertarScreen,
+        "insertarTrabajador": InsertarTrabajadorScreen,
     }
 
 
     def _on_mount(self) -> None:
-        self.install_screen(AnimalScreen(), name="animalScreen")
-        self.cc = ColeccionAnimal()
+        self.install_screen(MainScreen(), name="main")
+        # self.install_screen(AnimalScreen(), name="animal")
+        self.install_screen(InsertarScreen(), name="insertar")
+        self.install_screen(InsertarTrabajadorScreen(), name="insertarTrabajador")
+        self.ca = ColeccionAnimal()
+        self.ct = ColeccionTrabajador()
         self.switch_to_main()
 
     def switch_to_Animal(self):
         self.switch_mode("animal")
+        # self.app.push_screen("animal")
         
     def switch_to_Trabajador(self):
         self.switch_mode("trabajador")
@@ -189,10 +226,16 @@ class ModesApp(App):
     def switch_to_Habitat(self):
         self.switch_mode("habitat")
 
-    def switch_to_insertar(self):
-        self.switch_mode("insertar")
+    def switch_to_Insertar(self):
+        self.app.push_screen("insertar")
+        # self.switch_mode("insertar")
+
+    def switch_to_InsertarTrabajador(self):
+        self.app.push_screen("insertarTrabajador")
+        # self.switch_mode("insertar")
 
     def switch_to_main(self):
+        # self.app.push_screen("main")
         self.switch_mode("main")
 
     
