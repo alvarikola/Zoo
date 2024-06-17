@@ -70,6 +70,7 @@ class AnimalScreen(Screen):
         yield Header("Animales del zoo") 
         yield DataTable()
         yield Button("Insertar", id="insertar")
+        yield Button("Borrar", id="borrar")
         yield Button("Volver", id="volver")
         yield Footer()
 
@@ -81,6 +82,10 @@ class AnimalScreen(Screen):
             self.app.mytable = "animal"
             self.app.pop_screen()
             self.app.push_screen(InsertarScreen())
+        elif event.button.id == "borrar":
+            self.app.mytable = "animal"
+            self.app.pop_screen()
+            self.app.push_screen(BorrarScreen())
             
 
     def _on_mount(self) -> None:
@@ -99,6 +104,7 @@ class TrabajadorScreen(Screen):
         yield Header("Trabajadores del zoo") 
         yield DataTable()
         yield Button("Insertar", id="insertar")
+        yield Button("Borrar", id="borrar")
         yield Button("Volver", id="volver")
         yield Footer()
 
@@ -109,6 +115,10 @@ class TrabajadorScreen(Screen):
             self.app.mytable = "trabajador"
             self.app.pop_screen()
             self.app.push_screen(InsertarScreen())
+        elif event.button.id == "borrar":
+            self.app.mytable = "trabajador"
+            self.app.pop_screen()
+            self.app.push_screen(BorrarScreen())
 
     def _on_mount(self) -> None:
         table = self.query_one(DataTable)
@@ -127,6 +137,7 @@ class HabitatScreen(Screen):
         yield Header("Habitats del zoo") 
         yield DataTable()
         yield Button("Insertar", id="insertar")
+        yield Button("Borrar", id="borrar")
         yield Button("Volver", id="volver")
         yield Footer()
 
@@ -137,6 +148,10 @@ class HabitatScreen(Screen):
             self.app.mytable = "habitat"
             self.app.pop_screen()
             self.app.push_screen(InsertarScreen())
+        elif event.button.id == "borrar":
+            self.app.mytable = "habitat"
+            self.app.pop_screen()
+            self.app.push_screen(BorrarScreen())
 
     def _on_mount(self) -> None:
         table = self.query_one(DataTable)
@@ -151,15 +166,14 @@ class HabitatScreen(Screen):
 
 class InsertarScreen(Screen):
     def compose(self) -> ComposeResult:
-        yield Header("Insertar animales") 
-        yield Input(placeholder="Nombre del animal")
+        yield Header("Insertar datos") 
+        yield Input(placeholder="¡Escribe!")
         yield Button("Volver", id="volver")
         yield Button("Aceptar", id="aceptar")
         yield Footer()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "volver":
-            # self.app.push_screen("animal")
             self.app.pop_screen()
         elif event.button.id == "aceptar" and self.app.mytable == "animal":
             self.app.ca.insertar(Animal(self.query_one(Input).value))
@@ -173,6 +187,31 @@ class InsertarScreen(Screen):
 
     def _on_mount(self) -> None:
         self.title = "Insertar datos"
+
+
+class BorrarScreen(Screen):
+    def compose(self) -> ComposeResult:
+        yield Header("Borrar datos") 
+        yield Input(placeholder="¡Escribe!")
+        yield Button("Volver", id="volver")
+        yield Button("Aceptar", id="aceptar")
+        yield Footer()
+
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "volver":
+            self.app.pop_screen()
+        elif event.button.id == "aceptar" and self.app.mytable == "animal":
+            self.app.ca.borrar(Animal(self.query_one(Input).value))
+        elif event.button.id == "aceptar" and self.app.mytable == "trabajador":
+            self.app.ct.borrar(Trabajador(self.query_one(Input).value))
+        elif event.button.id == "aceptar" and self.app.mytable == "habitat":
+            self.app.ch.borrar(Habitat(self.query_one(Input).value))
+
+            
+            
+
+    def _on_mount(self) -> None:
+        self.title = "Borrar datos"
       
     
 
