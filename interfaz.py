@@ -40,6 +40,8 @@ HABITATS = [
 
 
 class MainScreen(Screen):
+    
+    
     def compose(self) -> ComposeResult:
         yield Header("El zoo de Álvaro")
         yield Horizontal( 
@@ -258,6 +260,8 @@ class ActualizarScreen(Screen):
 
 
 class ModesApp(App):
+    CSS_PATH = "estilos.tcss"
+
     BINDINGS = [
         ("a", "switch_mode('animal')", "Animal"),  
         ("t", "switch_mode('trabajador')", "Trabajador"),
@@ -274,13 +278,14 @@ class ModesApp(App):
     }
 
 
+
     def _on_mount(self) -> None:
         self.ca = ColeccionAnimal()
         self.ct = ColeccionTrabajador()
         self.ch = ColeccionHabitat()
         self.push_screen(MainScreen())     
 
-
+    # El actualizar no funciona porque tengo dos inputs pero no se 
 
 if __name__ == "__main__":
     app = ModesApp()
