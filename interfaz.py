@@ -73,7 +73,6 @@ class AnimalScreen(Screen):
         yield DataTable()
         yield Button("Insertar", id="insertar")
         yield Button("Borrar", id="borrar")
-        yield Button("Actualiar", id="actualizar")
         yield Button("Volver", id="volver")
         yield Footer()
 
@@ -89,10 +88,6 @@ class AnimalScreen(Screen):
             self.app.mytable = "animal"
             self.app.pop_screen()
             self.app.push_screen(BorrarScreen())
-        elif event.button.id == "actualizar":
-            self.app.mytable = "animal"
-            self.app.pop_screen()
-            self.app.push_screen(ActualizarScreen())
             
 
     def _on_mount(self) -> None:
@@ -112,7 +107,6 @@ class TrabajadorScreen(Screen):
         yield DataTable()
         yield Button("Insertar", id="insertar")
         yield Button("Borrar", id="borrar")
-        yield Button("Actualiar", id="actualizar")
         yield Button("Volver", id="volver")
         yield Footer()
 
@@ -127,10 +121,7 @@ class TrabajadorScreen(Screen):
             self.app.mytable = "trabajador"
             self.app.pop_screen()
             self.app.push_screen(BorrarScreen())
-        elif event.button.id == "actualizar":
-            self.app.mytable = "trabajador"
-            self.app.pop_screen()
-            self.app.push_screen(ActualizarScreen())
+
 
     def _on_mount(self) -> None:
         table = self.query_one(DataTable)
@@ -150,7 +141,6 @@ class HabitatScreen(Screen):
         yield DataTable()
         yield Button("Insertar", id="insertar")
         yield Button("Borrar", id="borrar")
-        yield Button("Actualiar", id="actualizar")
         yield Button("Volver", id="volver")
         yield Footer()
 
@@ -165,10 +155,7 @@ class HabitatScreen(Screen):
             self.app.mytable = "habitat"
             self.app.pop_screen()
             self.app.push_screen(BorrarScreen())
-        elif event.button.id == "actualizar":
-            self.app.mytable = "habitat"
-            self.app.pop_screen()
-            self.app.push_screen(ActualizarScreen())
+
 
     def _on_mount(self) -> None:
         table = self.query_one(DataTable)
@@ -228,34 +215,7 @@ class BorrarScreen(Screen):
             
 
     def _on_mount(self) -> None:
-        self.title = "Borrar datos"
-
-
-class ActualizarScreen(Screen):
-    def compose(self) -> ComposeResult:
-        yield Header("Actualizar datos") 
-        yield Input(placeholder="¡Escribe el viejo animal!", id="viejoAnimal")
-        yield Input(placeholder="¡Escribe el nuevo animal!", id="nuevoAnimal")
-        yield Button("Volver", id="volver")
-        yield Button("Aceptar", id="aceptar")
-        yield Footer()
-
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        if event.button.id == "volver":
-            self.app.pop_screen()
-        elif event.button.id == "aceptar" and self.app.mytable == "animal":
-            self.app.ca.actualizar(Animal(self.query_one(Input).value))
-        elif event.button.id == "aceptar" and self.app.mytable == "trabajador":
-            self.app.ct.actualizar(Trabajador(self.query_one(Input).value))
-        elif event.button.id == "aceptar" and self.app.mytable == "habitat":
-            self.app.ch.actualizar(Habitat(self.query_one(Input).value))
-
-            
-            
-
-    def _on_mount(self) -> None:
-        self.title = "Actualizar datos"
-      
+        self.title = "Borrar datos"  
     
 
 
